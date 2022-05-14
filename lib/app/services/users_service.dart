@@ -15,7 +15,7 @@ import '../controllers/users_provider.dart';
 class UserService {
   final Dio _dio = Dio();
   final root = "https://my-cashier17.herokuapp.com/api/v1";
-  
+
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>REGISTER
   Future<void> register({
     String? username,
@@ -98,9 +98,27 @@ class UserService {
       final pref = await SharedPreferences.getInstance();
       if (response.statusCode == 200) {
         //MODELS
-        user.setData = Users.fromJson(response.data["data"][0]);
         user.setToken = response.data["token"].toString();
         pref.setString("token", response.data["token"].toString());
+        pref.setString("id", response.data["data"][0]["id"].toString());
+        pref.setString(
+            "username", response.data["data"][0]["username"].toString());
+        pref.setString("email", response.data["data"][0]["email"].toString());
+        pref.setString(
+            "password", response.data["data"][0]["password"].toString());
+        pref.setString(
+            "createdAt", response.data["data"][0]["createdAt"].toString());
+        pref.setString(
+            "updatedAt", response.data["data"][0]["updatedAt"].toString());
+
+        user.setData = Users(
+          id: int.parse(pref.getString("id").toString()),
+          username: pref.getString("username").toString(),
+          email: pref.getString("email").toString(),
+          password: pref.getString("password").toString(),
+          createdAt: pref.getString("createdAt").toString(),
+          updatedAt: pref.getString("updatedAt").toString(),
+        );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -149,7 +167,25 @@ class UserService {
 
       if (response.statusCode == 200) {
         //MODELS
-        user.setData = Users.fromJson(response.data["data"]);
+        pref.setString("id", response.data["data"]["id"].toString());
+        pref.setString(
+            "username", response.data["data"]["username"].toString());
+        pref.setString("email", response.data["data"]["email"].toString());
+        pref.setString(
+            "password", response.data["data"]["password"].toString());
+        pref.setString(
+            "createdAt", response.data["data"]["createdAt"].toString());
+        pref.setString(
+            "updatedAt", response.data["data"]["updatedAt"].toString());
+
+        user.setData = Users(
+          id: int.parse(pref.getString("id").toString()),
+          username: pref.getString("username").toString(),
+          email: pref.getString("email").toString(),
+          password: pref.getString("password").toString(),
+          createdAt: pref.getString("createdAt").toString(),
+          updatedAt: pref.getString("updatedAt").toString(),
+        );
         user.setToken = pref.getString("token").toString();
         return;
       }
@@ -197,7 +233,25 @@ class UserService {
       final pref = await SharedPreferences.getInstance();
       if (response.statusCode == 200) {
         //MODELS
-        user.setData = Users.fromJson(response.data["data"]);
+        pref.setString("id", response.data["data"]["id"].toString());
+        pref.setString(
+            "username", response.data["data"]["username"].toString());
+        pref.setString("email", response.data["data"]["email"].toString());
+        pref.setString(
+            "password", response.data["data"]["password"].toString());
+        pref.setString(
+            "createdAt", response.data["data"]["createdAt"].toString());
+        pref.setString(
+            "updatedAt", response.data["data"]["updatedAt"].toString());
+
+        user.setData = Users(
+          id: int.parse(pref.getString("id").toString()),
+          username: pref.getString("username").toString(),
+          email: pref.getString("email").toString(),
+          password: pref.getString("password").toString(),
+          createdAt: pref.getString("createdAt").toString(),
+          updatedAt: pref.getString("updatedAt").toString(),
+        );
         user.setToken = response.data["token"].toString();
         pref.setString("token", response.data["token"].toString());
         Navigator.pop(context);
